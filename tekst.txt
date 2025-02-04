@@ -1,0 +1,129 @@
+tag_configure – see meetod määrab kindla sildi stiili ja omadused
+tag_add – see meetod lisab kindla sildi määratud tekstivahemikule
+Pildi lisamine ja kuvamine
+Et tkinteris kasutada pilte, siis esiteks peame importima Tkinteri mooduli ja PIL (Python Imaging Library) mooduli. PIL-i kasutamine võimaldab kuvada rohkem pildiformaate nagu PNG, JPEG, BMP jne. PIL-i kasutatakse koos Tkinteri ImageTk mooduliga. Kasuta kui projekt on suurem ja pikaajaline, sest see pakub paremat ühilduvust ja turvalisust.
+
+import tkinter as tk
+from PIL import Image, ImageTk
+
+Pildi kuvamine Label vidina abil
+Pildi lisamine Tkinteri rakendusse nõuab, et see oleks seotud mingi Tkinteri vidinaga. Tkinteris pole otsest meetodit pildi lisamiseks ilma, et see oleks seotud mõne graafilise komponendiga. Kõige sagedamini kasutatakse selleks Label, Canvas või Button vidinaid. Meie vaatame kuidas pilti kuvada Label abil.
+
+Kasutan seda pilti: python_512x512.png
+
+import tkinter as tk
+from PIL import Image, ImageTk
+
+def main():
+    aken = tk.Tk()
+    aken.title("Mario ülesanded")
+    aken.geometry("400x300")
+
+    # Pildi avamine ja Tkinteri jaoks ettevalmistamine
+    pilt = Image.open("img/python_512x512.png")
+    foto = ImageTk.PhotoImage(pilt)
+
+    # Pildi kuvamine Label abil
+    label = tk.Label(aken, image=foto)
+    label.image = foto  # Oluline: viide, et vältida garbage collectori poolt pildi kogemata kustutamist
+    label.pack()
+
+    aken.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+Pildi lisamisel oon olulised järgmised sammud:
+
+Pildi avamine – Image.open avab ja loeb pildifaili ning loob Image objekti
+Pildi konverteerimine – ImageTk.PhotoImage konverteerib selle Image objekti Tkinteri jaoks sobivaks PhotoImage objektiks, mida saab kasutada Tkinteri vidinates
+Pildi kuvamine – kasutame Label vidinat, et pilti kuvada
+Kui Tkinteri rakenduses kasutatakse pilte, tuleb hoida viidet pildile, et vältida Python’i prügikogu (garbage collector) poolt pildi eemaldamist. Ilma viite hoidmiseta võib pilt lihtsalt kaduda.
+
+Ja tegelikult võiks pildi kuvamiseks oma funktsiooni teha:
+
+import tkinter as tk
+from PIL import Image, ImageTk
+
+def kuva_pilt(aken, failinimi):
+    pilt = Image.open(failinimi)
+    foto = ImageTk.PhotoImage(pilt)
+    label = tk.Label(aken, image=foto)
+    label.image = foto
+    label.pack()
+
+def main():
+    aken = tk.Tk()
+    aken.title("Mario ülesanded")
+    aken.geometry("400x300")
+
+    kuva_pilt(aken, "img/python_512x512.png")
+
+    aken.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+Pildi töötlemine
+Pildiga töötamiseks on erinevaid meetodeid:
+
+suuruse muutmine (Resize)
+pööramine (Rotate)
+peegeldamine horisontaalselt (Mirror)
+peegeldamine vertikaalselt (Flip)
+heleduse muutmine (Brightness)
+kontrasti muutmine (Contrast)
+värviküllastuse muutmine (Color)
+teravuse muutmine (Sharpness)
+lõikamine (Crop)
+filtri rakendamine (Filter)
+muundamine halltoonidesse (Convert to Grayscale)
+läbipaistvuse muutmine (Alpha Composite)
+Vaatame näiteks pildi suuruse muutmist ja seda kohe, kui pilt on avatud.
+
+import tkinter as tk
+from PIL import Image, ImageTk
+
+def kuva_pilt(aken, failinimi, laius, korgus):
+    pilt = Image.open(failinimi)
+    pilt = pilt.resize((laius, korgus))
+    foto = ImageTk.PhotoImage(pilt)
+    label = tk.Label(aken, image=foto)
+    label.image = foto
+    label.pack()
+
+def main():
+    aken = tk.Tk()
+    aken.title("Mario ülesanded")
+    aken.geometry("400x300")
+
+    kuva_pilt(aken, "img/python_512x512.png", 200, 200)
+
+    aken.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+Täiendsin funktsiooni nii, et kasutaja saab lisada laiuse ning kõrguse enne kui pilt kuvatakse.
+
+Sarnaselt töötavad ka teised meetodid.
+
+# Pildi pööramine
+pilt = pilt.rotate(45)
+
+# Pildi peegeldamine horisontaalselt
+pilt = ImageOps.mirror(pilt)
+
+# Pildi peegeldamine vertikaalselt
+pilt = ImageOps.flip(pilt)
+
+# Pildi heleduse muutmine
+pilt = ImageEnhance.Brightness(pilt).enhance(1.5)
+
+# Pildi kontrasti muutmine
+pilt = ImageEnhance.Contrast(pilt).enhance(1.5)
+
+Ülesanne 2
+Tkinter akna loomine koos pildi, teksti ja kerimisribaga.
+
+Eesmärk: Õppida, kuidas luua GUI rakendus kasutades Tkinter raamistikku, mis sisaldab siltide, piltide ja tekstikastide lisamist ning nende vormindamist ja funktsionaalsuse lisamist (nt kerimisriba).
