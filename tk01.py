@@ -7,7 +7,7 @@ def main():
     aken.resizable(True, False)
 
     label = tk.Label(aken, text="Tere, maailm!").pack()
-    button = tk.Button(aken, text="Sulge", command=aken.destroy).pack()
+    button = tk.Button(aken, text="Tere maailm", command=aken.destroy).pack()
 
     aken.mainloop()
 
