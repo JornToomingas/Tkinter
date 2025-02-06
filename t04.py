@@ -2,8 +2,6 @@ import tkinter as tk
 
 
 
-
-
 def main():
     def kuva_varv(v):
         vastus.config(text=v)
@@ -27,7 +25,6 @@ def main():
     nupp3.pack(side="left", expand=True, fill="x")
     nupp4.pack(side="left", expand=True, fill="x")
     nupp5.pack(side="left", expand=True, fill="x")
-
 
 
     aken.mainloop()
