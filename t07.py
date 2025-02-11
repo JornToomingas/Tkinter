@@ -2,15 +2,17 @@ import tkinter as tk
 
 def valideeriTeksti(*args):
     text = entry_var.get()
-    if len(text) >= 11:
+    if len(text) == 11:
         sugunr = int(text[0])
         if sugunr%2==0:
             sugu = "naine"
         else:
             sugu = "mees"
+        sp = f"{text[5]}{text[6]}.{text[3]}{text[4]}.{text[1]}{text[2]}"
+        #print(sp)
         validation_label.config(text=sugu, fg="green")
     else:
-        validation_label.config(text="Sisesta vähemalt 5 märki!", fg="red")
+        validation_label.config(text="Sisesta vähemalt 11 märki!", fg="red")
 
 aken = tk.Tk()
 aken.title("Validaator")
