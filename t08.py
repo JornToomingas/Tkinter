@@ -5,7 +5,7 @@ from PIL import Image, ImageOps
 import os
 
 
-
+selected_files = []
 
 def open_directory():
     directory = filedialog.askdirectory()
@@ -13,15 +13,25 @@ def open_directory():
         dir_label.config(text=f"Valitud kaust: {directory}")
         kausta_sisu = os.listdir(directory)
         for fail in kausta_sisu:
-            print(fail)
+            # print(fail)
             file_name, file_extension = os.path.splitext(fail)
-            if file_extension == "jpg":
-                inputtxt.insert(tk.END, fail+"\n")
+            if file_extension == ".jpg" or file_extension == ".jpeg":
+                text_field.insert(tk.END, fail + "\n")
+                selected_files.append(os.path.join(directory, fail))
+            
+        print(selected_files)
     else:
         dir_label.config(text="Kausta ei valitud. ")
 
 def save_images():
-    pass
+    save_directory = filedialog.askdirectory()
+    if save_directory:
+        for file in selected_files:
+            img = Image.open(file)
+            img = img.resize((200, 200))
+            filename = os.path.basename(file)
+            img.save(os.path.join(save_directory, filename))
+        print("Pildid on salvestatud.")
 
 aken = tk.Tk()
 aken.title("Pildi suuruse muutmine")
